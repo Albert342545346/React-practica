@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import Note from './pages/Note';
 import WeatherWidget from './pages/WeatherWidget';
+import EducationalPage from './pages/EducationalPage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('notes'); // 'notes' или 'weather'
+  const [currentPage, setCurrentPage] = useState('notes'); // 'notes', 'weather', 'educational'
   const [notes, setNotes] = useState([]);
 
   const addNote = (text) => {
@@ -24,40 +25,31 @@ function App() {
 
   return (
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Моё React-приложение</h1>
+      <h1>Контрольная работа №4</h1>
 
-      {/* Переключатель страниц */}
-      <div style={{ marginBottom: '20px' }}>
+      {/* Навигация */}
+      <div style={{ marginBottom: '25px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         <button
           onClick={() => setCurrentPage('notes')}
-          style={{
-            padding: '10px 16px',
-            marginRight: '10px',
-            backgroundColor: currentPage === 'notes' ? '#007bff' : '#eee',
-            color: currentPage === 'notes' ? 'white' : 'black',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
+          style={navButtonStyle(currentPage === 'notes')}
         >
-          📝 Список заметок
+          📝 Заметки
         </button>
         <button
           onClick={() => setCurrentPage('weather')}
-          style={{
-            padding: '10px 16px',
-            backgroundColor: currentPage === 'weather' ? '#007bff' : '#eee',
-            color: currentPage === 'weather' ? 'white' : 'black',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
+          style={navButtonStyle(currentPage === 'weather')}
         >
-          🌤️ Погодный виджет
+          🌤️ Погода
+        </button>
+        <button
+          onClick={() => setCurrentPage('educational')}
+          style={navButtonStyle(currentPage === 'educational')}
+        >
+          🎓 Обучение
         </button>
       </div>
 
-      {/* Отображение выбранной "страницы" */}
+      {/* Контент страниц */}
       {currentPage === 'notes' ? (
         <div>
           <h2>📝 Список заметок</h2>
@@ -94,7 +86,7 @@ function App() {
                 cursor: 'pointer',
               }}
             >
-              Добавить заметку
+              Добавить
             </button>
           </div>
 
@@ -114,11 +106,26 @@ function App() {
             )}
           </div>
         </div>
-      ) : (
+      ) : currentPage === 'weather' ? (
         <WeatherWidget />
+      ) : (
+        <EducationalPage />
       )}
     </div>
   );
 }
+
+// Стиль кнопок навигации
+const navButtonStyle = (isActive) => ({
+  padding: '10px 16px',
+  backgroundColor: isActive ? '#007bff' : '#f0f0f0',
+  color: isActive ? 'white' : 'black',
+  border: '1px solid #ccc',
+  borderRadius: '6px',
+  cursor: 'pointer',
+  fontSize: '14px',
+  fontWeight: 'bold',
+  transition: 'background 0.2s',
+});
 
 export default App;
