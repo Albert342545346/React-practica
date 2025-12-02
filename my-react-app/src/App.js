@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Note from './pages/Note';
 import WeatherWidget from './pages/WeatherWidget';
 import EducationalPage from './pages/EducationalPage';
-import EducationalPage from './pages/EducationalPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('notes'); // 'notes', 'weather', 'educational'
