@@ -33,26 +33,26 @@ function App() {
           onClick={() => setCurrentPage('notes')}
           style={navButtonStyle(currentPage === 'notes')}
         >
-           Заметки
+          Заметки
         </button>
         <button
           onClick={() => setCurrentPage('weather')}
           style={navButtonStyle(currentPage === 'weather')}
         >
-           Погода
+          Погода
         </button>
         <button
           onClick={() => setCurrentPage('educational')}
           style={navButtonStyle(currentPage === 'educational')}
         >
-           Обучение
+          Обучение
         </button>
       </div>
 
       {/* Контент страниц */}
       {currentPage === 'notes' ? (
         <div>
-          <h2> Список заметок</h2>
+          <h2>Список заметок</h2>
           <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
@@ -115,7 +115,6 @@ function App() {
   );
 }
 
-// Стиль кнопок навигации
 const navButtonStyle = (isActive) => ({
   padding: '10px 16px',
   backgroundColor: isActive ? '#007bff' : '#f0f0f0',

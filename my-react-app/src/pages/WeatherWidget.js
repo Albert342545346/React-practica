@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 
 const MOCK_WEATHER = {
-  moscow: { temp: 18, condition: 'облачно', icon: '☁️' },
-  spb: { temp: 12, condition: 'дождь', icon: '🌧️' },
-  sochi: { temp: 26, condition: 'солнечно', icon: '☀️' },
-  ekb: { temp: 9, condition: 'пасмурно', icon: '🌫️' },
-  novosib: { temp: 5, condition: 'снег', icon: '❄️' },
+  moscow: { temp: 18, condition: 'облачно' },
+  spb: { temp: 12, condition: 'дождь' },
+  sochi: { temp: 26, condition: 'солнечно' },
+  ekb: { temp: 9, condition: 'пасмурно' },
+  novosib: { temp: 5, condition: 'снег' },
 };
 
 const CITIES = [
@@ -23,8 +23,8 @@ export default function WeatherWidget() {
 
   return (
     <div style={{ textAlign: 'center', padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
-      <h2>🌤️ Погодный виджет (заглушка)</h2>
-      
+      <h2>Погодный виджет (заглушка)</h2>
+
       <select
         value={city}
         onChange={(e) => setCity(e.target.value)}
@@ -45,7 +45,6 @@ export default function WeatherWidget() {
 
       {weather && (
         <div style={{ backgroundColor: '#e9f7fe', padding: '15px', borderRadius: '10px' }}>
-          <div style={{ fontSize: '60px', margin: '10px 0' }}>{weather.icon}</div>
           <p style={{ fontSize: '28px', margin: '5px 0' }}>{weather.temp}°C</p>
           <p style={{ color: '#555', fontSize: '16px' }}>{weather.condition}</p>
         </div>

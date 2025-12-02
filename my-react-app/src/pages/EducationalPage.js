@@ -1,5 +1,5 @@
 // src/pages/EducationalPage.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   TextField,
@@ -7,23 +7,20 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  FormHelperText,
-  Button,
   Typography,
   Paper,
   IconButton,
+  Button,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 
 export default function EducationalPage() {
-  // ===== Счётчик лайков =====
   const [likes, setLikes] = useState(0);
 
   const increment = () => setLikes(likes + 1);
   const decrement = () => setLikes(likes - 1);
 
-  // ===== Форма добавления технологии =====
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -37,7 +34,15 @@ export default function EducationalPage() {
   const [isFormValid, setIsFormValid] = useState(false);
   const [technologies, setTechnologies] = useState([]);
 
-  // Валидация
+  const isValidUrl = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -74,16 +79,7 @@ export default function EducationalPage() {
     setIsFormValid(Object.keys(newErrors).length === 0);
   };
 
-  const isValidUrl = (string) => {
-    try {
-      new URL(string);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     validateForm();
   }, [formData]);
 
@@ -123,7 +119,6 @@ export default function EducationalPage() {
       };
       setTechnologies([...technologies, cleanedData]);
 
-      // Сброс формы
       setFormData({
         title: '',
         description: '',
@@ -137,9 +132,9 @@ export default function EducationalPage() {
 
   return (
     <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto' }}>
-      {/* === Счётчик лайков === */}
+      {/* Счётчик лайков */}
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2>🎓 Обучающий пример: счётчик лайков</h2>
+        <h2>Обучающий пример: счётчик лайков</h2>
         <p>Текущее количество лайков:</p>
         <h1 style={{ color: '#007bff' }}>{likes}</h1>
         <div>
@@ -155,7 +150,7 @@ export default function EducationalPage() {
               cursor: 'pointer',
             }}
           >
-            👍 Increment
+            Increment
           </button>
           <button
             onClick={decrement}
@@ -169,23 +164,17 @@ export default function EducationalPage() {
               cursor: 'pointer',
             }}
           >
-            👎 Decrement
+            Decrement
           </button>
         </div>
       </div>
 
-      {/* === Форма добавления технологии === */}
-      <Paper
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ p: 3, mb: 4 }}
-        noValidate
-      >
+      {/* Форма добавления технологии */}
+      <Paper component="form" onSubmit={handleSubmit} sx={{ p: 3, mb: 4 }} noValidate>
         <Typography variant="h5" gutterBottom>
-          ➕ Добавить новую технологию (практика №25 + №26)
+          Добавить новую технологию (практика №25 + №26)
         </Typography>
 
-        {/* Название */}
         <TextField
           fullWidth
           label="Название технологии *"
@@ -197,7 +186,6 @@ export default function EducationalPage() {
           margin="normal"
         />
 
-        {/* Описание */}
         <TextField
           fullWidth
           label="Описание *"
@@ -211,7 +199,6 @@ export default function EducationalPage() {
           margin="normal"
         />
 
-        {/* Категория */}
         <FormControl fullWidth margin="normal">
           <InputLabel>Категория</InputLabel>
           <Select name="category" value={formData.category} onChange={handleChange} label="Категория">
@@ -223,7 +210,6 @@ export default function EducationalPage() {
           </Select>
         </FormControl>
 
-        {/* Сложность */}
         <FormControl fullWidth margin="normal">
           <InputLabel>Сложность</InputLabel>
           <Select name="difficulty" value={formData.difficulty} onChange={handleChange} label="Сложность">
@@ -233,7 +219,6 @@ export default function EducationalPage() {
           </Select>
         </FormControl>
 
-        {/* Дедлайн */}
         <TextField
           fullWidth
           label="Дедлайн (необязательно)"
@@ -247,7 +232,6 @@ export default function EducationalPage() {
           InputLabelProps={{ shrink: true }}
         />
 
-        {/* Ресурсы */}
         <Box mt={2}>
           <Typography variant="subtitle1" gutterBottom>
             Ресурсы для изучения
@@ -285,7 +269,6 @@ export default function EducationalPage() {
           </Button>
         </Box>
 
-        {/* Кнопки */}
         <Box display="flex" gap={2} mt={3}>
           <Button type="submit" variant="contained" color="primary" disabled={!isFormValid}>
             Сохранить технологию
@@ -293,11 +276,11 @@ export default function EducationalPage() {
         </Box>
       </Paper>
 
-      {/* === Список добавленных технологий === */}
+      {/* Список добавленных технологий */}
       {technologies.length > 0 && (
         <Box>
           <Typography variant="h6" gutterBottom>
-            📚 Добавленные технологии ({technologies.length})
+            Добавленные технологии ({technologies.length})
           </Typography>
           <Box display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }} gap={2}>
             {technologies.map((tech) => (
@@ -307,18 +290,34 @@ export default function EducationalPage() {
                   {tech.description}
                 </Typography>
                 <Box display="flex" gap={1} flexWrap="wrap">
-                  <span style={{ fontSize: '0.85rem', padding: '2px 6px', border: '1px solid #ccc', borderRadius: '4px' }}>
+                  <span
+                    style={{
+                      fontSize: '0.85rem',
+                      padding: '2px 6px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                    }}
+                  >
                     {tech.category}
                   </span>
                   <span
                     style={{
                       fontSize: '0.85rem',
                       padding: '2px 6px',
-                      backgroundColor: tech.status === 'completed' ? '#d4edda' : tech.status === 'in-progress' ? '#fff3cd' : '#f8d7da',
+                      backgroundColor:
+                        tech.status === 'completed'
+                          ? '#d4edda'
+                          : tech.status === 'in-progress'
+                          ? '#fff3cd'
+                          : '#f8d7da',
                       borderRadius: '4px',
                     }}
                   >
-                    {tech.status === 'completed' ? 'Завершено' : tech.status === 'in-progress' ? 'В процессе' : 'Не начато'}
+                    {tech.status === 'completed'
+                      ? 'Завершено'
+                      : tech.status === 'in-progress'
+                      ? 'В процессе'
+                      : 'Не начато'}
                   </span>
                 </Box>
               </Paper>

@@ -1,3 +1,4 @@
+// src/pages/Note.js
 import React from 'react';
 
 function Note({ id, text, createdAt, onDelete }) {
@@ -9,7 +10,7 @@ function Note({ id, text, createdAt, onDelete }) {
         borderRadius: '8px',
         padding: '12px',
         marginBottom: '10px',
-        position: 'relative'
+        position: 'relative',
       }}
     >
       <p style={{ margin: '0 0 5px 0' }}>{text}</p>
@@ -25,7 +26,7 @@ function Note({ id, text, createdAt, onDelete }) {
           border: 'none',
           fontSize: '16px',
           cursor: 'pointer',
-          color: '#dc3545'
+          color: '#dc3545',
         }}
       >
         ✖
