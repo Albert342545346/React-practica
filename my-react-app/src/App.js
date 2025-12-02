@@ -1,11 +1,10 @@
-// src/App.js
 import React, { useState } from 'react';
 import Note from './pages/Note';
 import WeatherWidget from './pages/WeatherWidget';
 import EducationalPage from './pages/EducationalPage';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('notes'); // 'notes', 'weather', 'educational'
+  const [currentPage, setCurrentPage] = useState('notes');
   const [notes, setNotes] = useState([]);
 
   const addNote = (text) => {
@@ -27,29 +26,18 @@ function App() {
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <h1>Контрольная работа №4</h1>
 
-      {/* Навигация */}
       <div style={{ marginBottom: '25px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <button
-          onClick={() => setCurrentPage('notes')}
-          style={navButtonStyle(currentPage === 'notes')}
-        >
+        <button onClick={() => setCurrentPage('notes')} style={navButtonStyle(currentPage === 'notes')}>
           Заметки
         </button>
-        <button
-          onClick={() => setCurrentPage('weather')}
-          style={navButtonStyle(currentPage === 'weather')}
-        >
+        <button onClick={() => setCurrentPage('weather')} style={navButtonStyle(currentPage === 'weather')}>
           Погода
         </button>
-        <button
-          onClick={() => setCurrentPage('educational')}
-          style={navButtonStyle(currentPage === 'educational')}
-        >
+        <button onClick={() => setCurrentPage('educational')} style={navButtonStyle(currentPage === 'educational')}>
           Обучение
         </button>
       </div>
 
-      {/* Контент страниц */}
       {currentPage === 'notes' ? (
         <div>
           <h2>Список заметок</h2>
@@ -95,13 +83,7 @@ function App() {
               <p>Нет заметок. Добавьте первую!</p>
             ) : (
               notes.map((note) => (
-                <Note
-                  key={note.id}
-                  id={note.id}
-                  text={note.text}
-                  createdAt={note.createdAt}
-                  onDelete={deleteNote}
-                />
+                <Note key={note.id} id={note.id} text={note.text} createdAt={note.createdAt} onDelete={deleteNote} />
               ))
             )}
           </div>

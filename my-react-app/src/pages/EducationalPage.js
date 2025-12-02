@@ -1,23 +1,7 @@
-// src/pages/EducationalPage.js
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  TextField,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  Typography,
-  Paper,
-  IconButton,
-  Button,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
 
 export default function EducationalPage() {
   const [likes, setLikes] = useState(0);
-
   const increment = () => setLikes(likes + 1);
   const decrement = () => setLikes(likes - 1);
 
@@ -130,6 +114,26 @@ export default function EducationalPage() {
     }
   };
 
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 'completed': return 'Завершено';
+      case 'in-progress': return 'В процессе';
+      default: return 'Не начато';
+    }
+  };
+
+  const getStatusStyle = (status) => {
+    let bgColor = '#f8d7da'; // default: not-started
+    if (status === 'completed') bgColor = '#d4edda';
+    else if (status === 'in-progress') bgColor = '#fff3cd';
+    return {
+      fontSize: '0.85rem',
+      padding: '2px 6px',
+      backgroundColor: bgColor,
+      borderRadius: '4px',
+    };
+  };
+
   return (
     <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto' }}>
       {/* Счётчик лайков */}
@@ -169,127 +173,181 @@ export default function EducationalPage() {
         </div>
       </div>
 
-      {/* Форма добавления технологии */}
-      <Paper component="form" onSubmit={handleSubmit} sx={{ p: 3, mb: 4 }} noValidate>
-        <Typography variant="h5" gutterBottom>
-          Добавить новую технологию (практика №25 + №26)
-        </Typography>
+      {/* Форма */}
+      <form onSubmit={handleSubmit} style={{ padding: '24px', border: '1px solid #ddd', borderRadius: '8px', marginBottom: '32px' }}>
+        <h3>Добавить новую технологию (практика №25 + №26)</h3>
 
-        <TextField
-          fullWidth
-          label="Название технологии *"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          error={!!errors.title}
-          helperText={errors.title}
-          margin="normal"
-        />
+        {/* Название */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ display: 'block', marginBottom: '4px' }}>Название технологии *</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            style={{
+              width: '100%',
+              padding: '8px',
+              border: errors.title ? '1px solid red' : '1px solid #ccc',
+              borderRadius: '4px',
+            }}
+          />
+          {errors.title && <div style={{ color: 'red', fontSize: '0.9em' }}>{errors.title}</div>}
+        </div>
 
-        <TextField
-          fullWidth
-          label="Описание *"
-          name="description"
-          multiline
-          rows={3}
-          value={formData.description}
-          onChange={handleChange}
-          error={!!errors.description}
-          helperText={errors.description}
-          margin="normal"
-        />
+        {/* Описание */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ display: 'block', marginBottom: '4px' }}>Описание *</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows="3"
+            style={{
+              width: '100%',
+              padding: '8px',
+              border: errors.description ? '1px solid red' : '1px solid #ccc',
+              borderRadius: '4px',
+            }}
+          />
+          {errors.description && <div style={{ color: 'red', fontSize: '0.9em' }}>{errors.description}</div>}
+        </div>
 
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Категория</InputLabel>
-          <Select name="category" value={formData.category} onChange={handleChange} label="Категория">
-            <MenuItem value="frontend">Frontend</MenuItem>
-            <MenuItem value="backend">Backend</MenuItem>
-            <MenuItem value="database">База данных</MenuItem>
-            <MenuItem value="devops">DevOps</MenuItem>
-            <MenuItem value="other">Другое</MenuItem>
-          </Select>
-        </FormControl>
+        {/* Категория */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ display: 'block', marginBottom: '4px' }}>Категория</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+          >
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend</option>
+            <option value="database">База данных</option>
+            <option value="devops">DevOps</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
 
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Сложность</InputLabel>
-          <Select name="difficulty" value={formData.difficulty} onChange={handleChange} label="Сложность">
-            <MenuItem value="beginner">Начальный</MenuItem>
-            <MenuItem value="intermediate">Средний</MenuItem>
-            <MenuItem value="advanced">Продвинутый</MenuItem>
-          </Select>
-        </FormControl>
+        {/* Сложность */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ display: 'block', marginBottom: '4px' }}>Сложность</label>
+          <select
+            name="difficulty"
+            value={formData.difficulty}
+            onChange={handleChange}
+            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+          >
+            <option value="beginner">Начальный</option>
+            <option value="intermediate">Средний</option>
+            <option value="advanced">Продвинутый</option>
+          </select>
+        </div>
 
-        <TextField
-          fullWidth
-          label="Дедлайн (необязательно)"
-          type="date"
-          name="deadline"
-          value={formData.deadline}
-          onChange={handleChange}
-          error={!!errors.deadline}
-          helperText={errors.deadline}
-          margin="normal"
-          InputLabelProps={{ shrink: true }}
-        />
+        {/* Дедлайн */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ display: 'block', marginBottom: '4px' }}>Дедлайн (необязательно)</label>
+          <input
+            type="date"
+            name="deadline"
+            value={formData.deadline}
+            onChange={handleChange}
+            style={{
+              width: '100%',
+              padding: '8px',
+              borderRadius: '4px',
+              border: errors.deadline ? '1px solid red' : '1px solid #ccc',
+            }}
+          />
+          {errors.deadline && <div style={{ color: 'red', fontSize: '0.9em' }}>{errors.deadline}</div>}
+        </div>
 
-        <Box mt={2}>
-          <Typography variant="subtitle1" gutterBottom>
-            Ресурсы для изучения
-          </Typography>
+        {/* Ресурсы */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ display: 'block', marginBottom: '8px' }}>Ресурсы для изучения</label>
           {formData.resources.map((resource, index) => (
-            <Box key={index} display="flex" gap={1} alignItems="center" mb={1}>
-              <TextField
-                fullWidth
+            <div key={index} style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
+              <input
                 type="url"
                 placeholder="https://example.com"
                 value={resource}
                 onChange={(e) => handleResourceChange(index, e.target.value)}
-                error={!!errors[`resource_${index}`]}
-                helperText={errors[`resource_${index}`]}
+                style={{
+                  flex: 1,
+                  padding: '6px',
+                  border: errors[`resource_${index}`] ? '1px solid red' : '1px solid #ccc',
+                  borderRadius: '4px',
+                }}
               />
               {formData.resources.length > 1 && (
-                <IconButton
+                <button
+                  type="button"
                   onClick={() => removeResourceField(index)}
-                  color="error"
-                  aria-label={`Удалить ресурс ${index + 1}`}
+                  style={{
+                    padding: '4px 8px',
+                    background: '#dc3545',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
                 >
-                  <DeleteIcon />
-                </IconButton>
+                  Удалить
+                </button>
               )}
-            </Box>
+            </div>
           ))}
-          <Button
-            startIcon={<AddIcon />}
+          <button
+            type="button"
             onClick={addResourceField}
-            variant="outlined"
-            size="small"
-            sx={{ mt: 1 }}
+            style={{
+              padding: '6px 12px',
+              background: '#6c757d',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
           >
             Добавить ресурс
-          </Button>
-        </Box>
+          </button>
+        </div>
 
-        <Box display="flex" gap={2} mt={3}>
-          <Button type="submit" variant="contained" color="primary" disabled={!isFormValid}>
-            Сохранить технологию
-          </Button>
-        </Box>
-      </Paper>
+        <button
+          type="submit"
+          disabled={!isFormValid}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: isFormValid ? '#007bff' : '#ccc',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: isFormValid ? 'pointer' : 'not-allowed',
+          }}
+        >
+          Сохранить технологию
+        </button>
+      </form>
 
-      {/* Список добавленных технологий */}
+      {/* Список технологий */}
       {technologies.length > 0 && (
-        <Box>
-          <Typography variant="h6" gutterBottom>
-            Добавленные технологии ({technologies.length})
-          </Typography>
-          <Box display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }} gap={2}>
+        <div>
+          <h3>Добавленные технологии ({technologies.length})</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
             {technologies.map((tech) => (
-              <Paper key={tech.id} sx={{ p: 2 }}>
-                <Typography variant="h6">{tech.title}</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  {tech.description}
-                </Typography>
-                <Box display="flex" gap={1} flexWrap="wrap">
+              <div
+                key={tech.id}
+                style={{
+                  border: '1px solid #ccc',
+                  borderRadius: '8px',
+                  padding: '16px',
+                  backgroundColor: '#fafafa',
+                }}
+              >
+                <h4 style={{ margin: '0 0 8px 0' }}>{tech.title}</h4>
+                <p style={{ fontSize: '0.9em', color: '#555', margin: '0 0 12px 0' }}>{tech.description}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   <span
                     style={{
                       fontSize: '0.85rem',
@@ -300,30 +358,12 @@ export default function EducationalPage() {
                   >
                     {tech.category}
                   </span>
-                  <span
-                    style={{
-                      fontSize: '0.85rem',
-                      padding: '2px 6px',
-                      backgroundColor:
-                        tech.status === 'completed'
-                          ? '#d4edda'
-                          : tech.status === 'in-progress'
-                          ? '#fff3cd'
-                          : '#f8d7da',
-                      borderRadius: '4px',
-                    }}
-                  >
-                    {tech.status === 'completed'
-                      ? 'Завершено'
-                      : tech.status === 'in-progress'
-                      ? 'В процессе'
-                      : 'Не начато'}
-                  </span>
-                </Box>
-              </Paper>
+                  <span style={getStatusStyle(tech.status)}>{getStatusLabel(tech.status)}</span>
+                </div>
+              </div>
             ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
     </div>
   );

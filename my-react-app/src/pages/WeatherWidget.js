@@ -1,4 +1,3 @@
-// src/pages/WeatherWidget.js
 import React, { useState } from 'react';
 
 const MOCK_WEATHER = {

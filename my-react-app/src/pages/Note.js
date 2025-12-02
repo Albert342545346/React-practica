@@ -1,4 +1,3 @@
-// src/pages/Note.js
 import React from 'react';
 
 function Note({ id, text, createdAt, onDelete }) {
@@ -15,7 +14,6 @@ function Note({ id, text, createdAt, onDelete }) {
     >
       <p style={{ margin: '0 0 5px 0' }}>{text}</p>
       <small style={{ color: '#888' }}>Создано: {createdAt}</small>
-
       <button
         onClick={() => onDelete(id)}
         style={{
