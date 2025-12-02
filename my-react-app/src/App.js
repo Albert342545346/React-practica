@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Note from './pages/Note';
 import WeatherWidget from './pages/WeatherWidget';
 import EducationalPage from './pages/EducationalPage';
+import EducationalPage from './pages/EducationalPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('notes'); // 'notes', 'weather', 'educational'
@@ -33,26 +34,26 @@ function App() {
           onClick={() => setCurrentPage('notes')}
           style={navButtonStyle(currentPage === 'notes')}
         >
-          📝 Заметки
+           Заметки
         </button>
         <button
           onClick={() => setCurrentPage('weather')}
           style={navButtonStyle(currentPage === 'weather')}
         >
-          🌤️ Погода
+           Погода
         </button>
         <button
           onClick={() => setCurrentPage('educational')}
           style={navButtonStyle(currentPage === 'educational')}
         >
-          🎓 Обучение
+           Обучение
         </button>
       </div>
 
       {/* Контент страниц */}
       {currentPage === 'notes' ? (
         <div>
-          <h2>📝 Список заметок</h2>
+          <h2> Список заметок</h2>
           <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
