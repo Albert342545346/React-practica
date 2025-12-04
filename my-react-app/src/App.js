@@ -7,6 +7,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('notes');
   const [notes, setNotes] = useState([]);
 
+  // Добавление новой заметки
   const addNote = (text) => {
     if (text.trim() !== '') {
       const newNote = {
@@ -18,14 +19,27 @@ function App() {
     }
   };
 
+  // Удаление заметки
   const deleteNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
+  };
+
+  // Редактирование заметки
+  const editNote = (id, newText) => {
+    setNotes(
+      notes.map((note) =>
+        note.id === id
+          ? { ...note, text: newText }
+          : note
+      )
+    );
   };
 
   return (
     <div className="App" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <h1>Контрольная работа №4</h1>
 
+      {/* Навигация */}
       <div style={{ marginBottom: '25px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         <button onClick={() => setCurrentPage('notes')} style={navButtonStyle(currentPage === 'notes')}>
           Заметки
@@ -38,9 +52,12 @@ function App() {
         </button>
       </div>
 
+      {/* Страница "Заметки" */}
       {currentPage === 'notes' ? (
         <div>
           <h2>Список заметок</h2>
+
+          {/* Поле ввода для новой заметки */}
           <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
@@ -78,12 +95,20 @@ function App() {
             </button>
           </div>
 
+          {/* Список заметок */}
           <div>
             {notes.length === 0 ? (
               <p>Нет заметок. Добавьте первую!</p>
             ) : (
               notes.map((note) => (
-                <Note key={note.id} id={note.id} text={note.text} createdAt={note.createdAt} onDelete={deleteNote} />
+                <Note
+                  key={note.id}
+                  id={note.id}
+                  text={note.text}
+                  createdAt={note.createdAt}
+                  onDelete={deleteNote}
+                  onEdit={editNote} // Передаём функцию редактирования
+                />
               ))
             )}
           </div>
@@ -97,6 +122,7 @@ function App() {
   );
 }
 
+// Стили для кнопок навигации
 const navButtonStyle = (isActive) => ({
   padding: '10px 16px',
   backgroundColor: isActive ? '#007bff' : '#f0f0f0',
